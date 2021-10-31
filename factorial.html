@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js">
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <body>
-
-<div ng-app="myApp" ng-controller="myCtrl">
-
-<h1>Input a number for calculating its factorial</h1>
-<input type="number" placeholder="Your number goes here..." ng-model="n">
-<h2>The factorial is {{fact(n)}}</h2>
-
+<div id="app">
+    <h1>Input a number for calculating its factorial</h1>
+    <input type="number" placeholder="Your number goes here..." v-model="n">
+    <h2>The factorial is {{fact(n)}}</h2>
 </div>
 
+<script src="https://unpkg.com/vue@next"></script>
 <script>
-var app = angular.module('myApp', []);
-app.controller('myCtrl', ['$scope', function($scope) {
-	$scope.n;
-    $scope.fact = function(n){
-    	if(n==0){return 1;}
+let app = Vue.createApp({
+	data: function() {
+    return {
+      		n: null
+    	}
+  	},
+   methods: {
+    fact(n){
+        var res = n;
+        if(n===0 || n===1){return 1;}
         else if(n<0){return "invalid"}
-        else{return n*$scope.fact(n-1);}}
-}]);
+        else{
+            while(n>1){
+                n--;
+                res = res * n;
+            }
+            return res;
+        }}
+	}
+},)
+app.mount('#app')
 </script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 	$('input').click(function() {
     $(this).attr('placeholder', '')
 }).blur(function() {
-    $(this).attr('placeholder', 'Your number goes here...')
+    $(this).attr('placeholder', 'Your text goes here...')
 })
 </script>
 
